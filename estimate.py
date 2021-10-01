@@ -6,7 +6,7 @@ from claim import generate_itd_claim
 
 def basic_monte_carlo(model, examples=10):
 
-    T = np.arange(model.t_start, model.t_end, 0.01)
+    T = np.arange(model.t_start, model.t_end, 0.1)
     U = np.vectorize(model.U)
 
     share_of_ruins = 0
@@ -26,7 +26,7 @@ def basic_monte_carlo(model, examples=10):
 
 
 def advanced_monte_carlo(model, examples=10):
-    probabilities_sum = 0
+    share_of_ruins = 0
 
     for i in range(examples):
 
@@ -38,17 +38,17 @@ def advanced_monte_carlo(model, examples=10):
         for _ in range(G):
             itd_claims_sum += generate_itd_claim()
 
-        if model.u_initial >= itd_claims_sum:
-            probabilities_sum += 1
+        if model.u_initial < itd_claims_sum:
+            share_of_ruins += 1
 
-        if i % 2000 == 0:
+        if i % 20 == 0:
             print(f'{i+1} / {examples}')
             print('Current survival percent = {:.2f}%'.format(
-                probabilities_sum / (i + 1) * 100))
+                share_of_ruins / (i + 1) * 100))
 
     print('Finished')
-    survival_percent = probabilities_sum / examples * 100
-    print('Survival = {:.4f} %'.format(survival_percent))
+    ruined_percent = share_of_ruins / examples * 100
+    print('Ruined = {:.4f} %'.format(ruined_percent))
 
 
 
