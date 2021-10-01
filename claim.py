@@ -14,5 +14,6 @@ def generate_claim():
 
 # Will draw a sample from ~X_i integrated tail claim distribution.
 def generate_itd_claim():
-    xi = random.random()
-    return 1 / 13 * (34 - np.sqrt(1156 - 1170 * xi))
+    xi = np.random.uniform(0, 1)
+    xi = min(xi, 1156 / 1170)
+    return 1 / 13 * (34 - np.sqrt(1170 - 1170 * xi))

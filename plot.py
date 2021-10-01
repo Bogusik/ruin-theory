@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot_trajectories(model):
+def plot_trajectories(model, filename):
     T = np.arange(model.t_start, model.t_end, 0.001)
     U = np.vectorize(model.U)
 
@@ -10,7 +10,7 @@ def plot_trajectories(model):
         plt.plot(T, U(T))
         model.refresh()
 
-    plt.savefig("trajectories.png")
+    plt.savefig(filename)
 
 
 
