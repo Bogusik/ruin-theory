@@ -12,6 +12,9 @@ def plot_trajectories(model, filename):
         plt.plot(T, U(T))
         model.refresh()
 
+    plt.xlabel('t')
+    plt.ylabel('U(t)')
+
     plt.savefig(filename)
 
 
