@@ -1,36 +1,30 @@
 import numpy as np
-
 from claim import generate_itd_claim
+from insurance import Model
 
 
-def basic_monte_carlo(model, examples=10):
-
+# Generates trajectories and computes the ruin probability experimentally.
+def basic_monte_carlo(model: Model, examples: int = 10) -> float:
     T = np.arange(model.t_start, model.t_end, 0.01)
     U = np.vectorize(model.U)
 
     share_of_ruins = 0
     for i in range(examples):
-
         if np.any(U(T) < 0):
             share_of_ruins += 1
         model.refresh()
 
-        if i % 200 == 0:
-            print(f'{i+1} / {examples}')
-            print('Current ruined percent = {:.2f}%'.format(share_of_ruins / (i + 1) * 100))
-
-    # print('Finished')
     ruined_percent = share_of_ruins / examples * 100
     print('Ruined = {:.4f}%'.format(ruined_percent))
+    return ruined_percent
 
 
-def advanced_monte_carlo(model, examples=10):
+# Computes ruin probability based on geometric amount of
+# integrated tail distribution random variables.
+def advanced_monte_carlo(model: Model, examples: int = 10) -> float:
     share_of_ruins = 0
-
     for i in range(examples):
-
         p = 1 - (model.rate * model.mu) / model.c
-
         G = np.random.geometric(p) - 1
 
         itd_claims_sum = 0
@@ -40,14 +34,6 @@ def advanced_monte_carlo(model, examples=10):
         if model.u_initial < itd_claims_sum:
             share_of_ruins += 1
 
-        # if i % 200 == 0:
-        #     print(f'{i+1} / {examples}')
-        #     print('Current survival percent = {:.2f}%'.format(
-        #         share_of_ruins / (i + 1) * 100))
-
-    # print('Finished')
     ruined_percent = share_of_ruins / examples * 100
     print('Ruined = {:.4f} %'.format(ruined_percent))
-
-
-
+    return ruined_percent

@@ -1,19 +1,16 @@
 import random
-
 import numpy as np
-
-THRESHOLD = 0.3
 
 
 # Will draw a sample from X_i claims distribution.
-def generate_claim():
-    p = random.random()
+def generate_claim() -> float:
+    p = random.random()  # p - distributed uniformly on (0, 1).
     U = np.random.uniform
-    return U(0, 1) if p <= THRESHOLD else U(2, 4)
+    return U(0, 1) if p <= .3 else U(2, 4)
 
 
 # Will draw a sample from ~X_i integrated tail claim distribution.
-def generate_itd_claim():
+def generate_itd_claim() -> float:
     xi = np.random.uniform(0, 1)
 
     if xi < 0.377777774:
