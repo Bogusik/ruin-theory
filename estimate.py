@@ -3,8 +3,7 @@ from claim import generate_itd_claim
 from insurance import Model
 
 
-# Generates trajectories and computes the ruin probability experimentally.
-def basic_monte_carlo(model: Model, examples: int = 10) -> float:
+def basic_monte_carlo(model, examples = 10):
     T = np.arange(model.t_start, model.t_end, 0.01)
     U = np.vectorize(model.U)
 
@@ -19,9 +18,7 @@ def basic_monte_carlo(model: Model, examples: int = 10) -> float:
     return ruined_percent
 
 
-# Computes ruin probability based on geometric amount of
-# integrated tail distribution random variables.
-def advanced_monte_carlo(model: Model, examples: int = 10) -> float:
+def advanced_monte_carlo(model, examples = 10):
     share_of_ruins = 0
     for i in range(examples):
         p = 1 - (model.rate * model.mu) / model.c

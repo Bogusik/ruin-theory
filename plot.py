@@ -3,8 +3,7 @@ import numpy as np
 from insurance import Model
 
 
-# Plots the trajectories of Insurance Process.
-def plot_trajectories(model: Model, filename: str):
+def plot_trajectories(model, filename):
     T = np.arange(model.t_start, model.t_end, 0.001)
     U = np.vectorize(model.U)
 

@@ -47,4 +47,4 @@ survival_probability_second = get_ilt_second(50)
 ```
 
 ### **Maths**
-Preliminary mathematical derivations and justifications can be found in [here](Insurance.pdf). 
+Preliminary mathematical derivations and justifications can be found in [here](srp.pdf). 
